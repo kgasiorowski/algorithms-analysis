@@ -1,0 +1,142 @@
+\documentclass[12pt]{report}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage{graphicx}
+
+\newcommand{\Lim}[1]{\raisebox{0.5ex}{\scalebox{0.8}{$\displaystyle \lim_{#1}\;$}}}
+\newcommand{\MLim}{\Lim{x\rightarrow\infty}}
+
+\newcommand{\no}{\noindent}
+
+\begin{document}
+	
+	\Large
+	\centering
+	CSE373 Homework 1
+	
+	\justify
+	\normalsize
+	
+	Kuba Gasiorowski\\
+	ID: 109776237\\
+	
+	\no 1. First I ranked them more generically:\\
+	
+	\no a) Constant: $1$\\
+	b) Linear: $n\log_2 n, \; 2^{\log_2n}\:(= n), 10n\log_{10}n$\\
+	c) Polynomial: $n^3$ \\
+	d) Exponential (or higher than poly, but lower than factorial): $4^{\log_2n}, 2^{\log_{50}n}, n^{\log_2\log_2n}$ \\
+	e) Factorial: $n!, \; (n+1)!$\\
+	
+	\no Knowing that for two functions $f(n),\:g(n): $\\
+	
+	\centering 
+	$f(n) \in O(g(n)) \text{ and } g(n) \in O(f(n)) \iff  f(n) \in \theta{}(g(n))$\\
+	
+	\justify
+	
+	And we can find if $ f(n) \in O(g(n))$ by calculating: \\ 
+	
+	\centering
+	
+	$\Lim{x\rightarrow\infty} \frac{|f(x)|}{g(x)} < \infty$
+	
+	\justify
+	
+	So I then compared the functions using the above formulas.
+	
+	\no 1) $f_4(n) = 1$ \\
+	2) $f_5(	n) = 2^{\log_2n} (= n)$ \\
+	3) $f_3(n) = n\log_2n$ and $f_6(n) = 10n\log_{10}n$\\
+	4) $f_8(n) = 2^{\log_{50}n} \text{ and } f_9(n) = 4^{\log_2n}$ \\
+	5) $f_{10}(n) = n^{\log_2\log_2n}$\\
+	6) $f_1(n) = n^3$ \\
+	7) $f_2(n) = n!$ \\
+	8) $f_7(n) = (n+1)!$\\
+	
+	\pagebreak
+	\no 2a) $f(n) = 2^{n+1} \text{, } g(n) = 2^n$ \\
+	\begin{align*}
+	\Lim{x\rightarrow\infty} \frac{|f(x)|}{g(x)} &< \; \infty \\
+	\Lim{x\rightarrow\infty} \frac{2^{n+1}}{2^n} &< \; \infty \\
+	\Lim{x\rightarrow\infty} \frac{2}{1} &< \; \infty \\
+	2 &< \; \infty \\
+	\end{align*}
+	Therefore, $2^{n+1} \in O(2^n)$.\\ \\
+	\no b) $f(n) = 2^{2n}, g(n) = 2^n $
+	\begin{align*}
+	\MLim \frac{|f(x)|}{g(x)} &< \; \infty \\
+	\MLim \frac{2^{2x}}{2^x} &< \; \infty \\
+	\MLim 2^x &< \; \infty \\
+	\infty &\nless \infty\\
+	\end{align*}
+	Therefore, $2^{2n} \notin O(2^n)$.\\ \\
+	\no c) $f(n) = 3^n $, $g(n) = 2^n$ \\
+	\begin{align*}
+	\MLim \frac{3^n}{2^n} &< \infty \\
+	\MLim \left(\frac{3}{2}\right)^n &< \infty\\
+	\infty &\nless \infty
+	\end{align*}
+	Therefore, $ 3^n \notin O(2^n)$.\\ \\
+	
+	\pagebreak
+	\no d) We must show that both $f(n) \in O(f(\frac{n}{2}))$ and $f(n) \in \Omega(f(\frac{n}{2}))$. Consider $f(n) = 2^n\text{. This gives us } f(\frac{n}{2}) = \sqrt{2^n}$. \\
+	Substituting for the limit rule for Big-Oh: \\
+	\begin{align*}
+	\MLim \frac{f(n)}{f(\frac{2}{n})} &< \infty \\
+	\MLim \frac{2^n}{\sqrt{2^n}} &< \infty \\
+	\MLim \sqrt{2^n} &< \infty \\
+	\infty &\nless \infty
+	\end{align*}
+	Thus, $f(n) \notin O(\frac{n}{2}) \implies f(n) \notin \theta(f(\frac{n}{2}))$. \\
+	
+	\no e) We have 
+	\begin{align*}
+	f(n) \in O(g(n)) &\iff \exists c, n_0;c > 0, n_0 \geq 0, \forall n \geq n_0: f(n) \leq c \cdot f(n)\\
+	g(n) \in \Omega(f(n)) &\iff \exists c, n_0;c > 0, n_0 \geq 0, \forall n \geq n_0: f(n) \geq c \cdot g(n)
+	\end{align*}
+	1. Assume $f(n) \leq c \cdot g(n)$.\\
+	2. Let $c' = \frac{1}{c} \left(\text{since } c \neq 0\right)$\\
+	3. Let $n = \text{ some arbitrary number such that } n \geq n_0$.\\
+	4. Then we have $f(n) \leq c \cdot g(n)$.\\
+	5. Next we have $\frac{f(n)}{c} \leq g(n)$\\
+	6. Substituting, $c' \cdot f(n) \leq g(n)$\\
+	7. Since n is arbitrary, $\forall n \geq n_0: c' \cdot f(n) \leq g(n)$\\
+	8. Thus $\exists n_0 \geq 0 : c' \cdot f(n) \leq g(n)$\\
+	9. Thus $\exists c' >0 : c' \cdot f(n) \leq g(n)$\\
+	10. Rename $c'$ to $c$, so now $c \cdot f(n) \leq g(n)$\\
+	11. Hence $f(n) \leq c \cdot g(n) \implies c \cdot f(n) \leq g(n)$\\
+	12. Hence $f(n) \in O(g(n)) \implies g(n) \in \Omega(f(n))$\\
+	
+	\no f) Using $f(n) \in O(g(n))$:\\
+	\\
+	1. $\exists c, n_0; \forall n > n_0 : f(n) \leq c \cdot g(n)$\\
+	2. Thus, $\log{f(n)} \leq \log{c} + \log{g(n)}$\\
+	3. $\exists c' : c' \geq \frac{\log{c}}{\log{g(n_0)}} + 1$\\
+	4. Thus, $(c' - 1)\log{g(n_0)} \geq \log{c}$\\
+	5. Hence, $\exists c', n_0; \forall n > n_0:\log{f(n)} \leq \log{g(n)} \leq c'\log{g(n)}$\\
+	6. Therefore, $\log{f(n)} \in O(\log{g(n)})$\\
+	
+	\no g) Consider $f(n) = 2\log{n} \text{ and } g(n) = \log{n}$. Substituting, we get \\
+	
+	\centering
+	$2^{f(n)} = n^2$\\
+	and\\
+	$2^{g(n)} = n$\\
+	\justify
+	
+	It's clear that $2\log{n} \in O(\log{n})$. It is also clear that $n^2 \notin O(n)$.\\
+	Therefore, $2^{f(n)} \notin O(2^{g(n)})$.\\
+	
+	\no h) 	\\
+	1. Assume $\exists c, n_0; c > 0, \forall n \geq n_0$\\
+	2. Thus we have $f(n) \leq c \cdot g(n)$ \\
+	3. Since everything is positive, and squaring is order-preserving:
+	\begin{align*}
+	f(n)^2 &\leq (c\cdot g(n))^2\\
+	f(n)^2 &\leq c^2g(n)^2
+	\end{align*}
+	4. Thus, $f(n)^2 \in O(g(n)^2)$ holds true.
+
+\end{document}
