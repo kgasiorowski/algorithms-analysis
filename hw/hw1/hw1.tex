@@ -103,7 +103,7 @@
 	\tab 4. Then we have $f(n) \leq c \cdot g(n)$.\\
 	\tab 5. Next we have $\frac{f(n)}{c} \leq g(n)$\\
 	\tab 6. Substituting, $c' \cdot f(n) \leq g(n)$\\
-	\tab 7. Since n is arbitrary, $\forall n \geq n_0: c' \cdot f(n) \leq g(n)$\\
+	\tab 7. Since $n$ is arbitrary, $\forall n \geq n_0: c' \cdot f(n) \leq g(n)$\\
 	\tab 8. Thus $\exists n_0 \geq 0 : c' \cdot f(n) \leq g(n)$\\
 	\tab 9. Thus $\exists c' >0 : c' \cdot f(n) \leq g(n)$\\
 	\tab 10. Rename $c'$ to $c$, so now $c \cdot f(n) \leq g(n)$\\
@@ -132,7 +132,10 @@
 	
 	\no h) 	$f(n)^2 \in O(g(n)^2)$\\
 	\tab 1. Assume $\exists c, n_0; c > 0, \forall n \geq n_0$\\
-	\tab 2. Thus we have $f(n) \leq c \cdot g(n)$ \\
+	\tab 2. Thus we have 
+	\begin{align*}
+	f(n) \leq c \cdot g(n) \\
+	\end{align*}
 	\tab 3. Since everything is positive, and squaring is order-preserving:
 	\begin{align*}
 	f(n)^2 &\leq (c\cdot g(n))^2\\
@@ -140,6 +143,16 @@
 	\end{align*}
 	\tab 4. Thus, $f(n)^2 \in O(g(n)^2)$ holds true.\\
 
-	\no 5. This would not work. Consider the following graph of 4 vertices $v=\{a, b, c, d\}$ and 4 edges $e = \{(a,b) = 10, (a, c) = 5, (c, b) = 4, (a,d) = -10\}$. The shortest path from $a$ to $b$ would be calculated as $a\rightarrow c \rightarrow b$ with a total cost of 9. If we run the algorithm described in the problem, we obtain a new set of edges: $e = \{(a,b) = 20, (a,c) = 15, (c,b) = 14, (a,d) = 0\}$. Now if we re-run Dijkstra's Algorithm to find the shortest path from $a$ to $b$, the shortest path is $a\rightarrow b$ with cost 20, as opposed to the original shortest path $a\rightarrow c \rightarrow b$ which now has cost 29.
+	\no 3. Skipped \#3.\\
+
+	\no 4. \\
+
+	\no 5. This would not work. Consider the following graph of 4 vertices $v=\{a, b, c, d\}$ and 4 edges $e = \{(a,b) = 10, (a, c) = 5, (c, b) = 4, (a,d) = -10\}$. The shortest path from $a$ to $b$ would be calculated as $a\rightarrow c \rightarrow b$ with a total cost of 9. If we run the algorithm described in the problem, we obtain a new set of edges: $e = \{(a,b) = 20, (a,c) = 15, (c,b) = 14, (a,d) = 0\}$. Now if we re-run Dijkstra's Algorithm to find the shortest path from $a$ to $b$, the shortest path is $a\rightarrow b$ with cost 20, as opposed to the original shortest path $a\rightarrow c \rightarrow b$ which now has cost 29. \\
+	
+	\pagebreak
+	
+	\no 6. It's important to note that if $d_v \geq 2, \forall v \in G$, then all nodes will have an edge for DFS to "enter" and "exit" on. If we try to use DFS to create a spanning tree, because $d \geq 2$, DFS will always have another edge to use as an exit from that node. Therefore, DFS will be able to theoretically trace a path through the entire graph without ever having to backtrack. So we must end at some node $v_j$. However, since we've visited all the nodes in the graph already, and each node has $d \geq 2$ (and we previously stated that DFS will always have an edge to exit each node), there must exist an edge $e$ which connects $v_j$ to another node in the graph. Thus a cycle must exist. Since a cycle cannot have a length less than 3, we can say that the cycle must have length $> d$.\\
+
+	\no 7. Skipped \#7.\\
 
 \end{document}
