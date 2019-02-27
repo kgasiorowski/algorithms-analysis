@@ -1,2 +1,3 @@
-!.gitignore
-!*.tex
+*
+!./.gitignore
+!./*.tex
