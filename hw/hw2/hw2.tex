@@ -1,0 +1,59 @@
+\documentclass[12pt]{report}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage{graphicx}
+
+\newcommand{\Lim}[1]{\raisebox{0.5ex}{\scalebox{0.8}{$\displaystyle \lim_{#1}\;$}}}
+\newcommand{\MLim}{\Lim{x\rightarrow\infty}}
+
+\newcommand{\no}{\noindent}
+\newcommand{\tab}{\hspace*{.6cm}}
+
+\begin{document}
+	
+	\Large
+	\centering
+	CSE373 Homework 2
+	
+	\justify
+	\normalsize
+	
+	Kuba Gasiorowski\\
+	ID: 109776237\\
+	
+	\no \textbf{1. } Given two nodes $s$ and $t$, we want to find the highest probability path from $s$ to $t$. The algorithm will look like the following:
+	
+	\begin{enumerate}
+		\item Create a topological ordering of the graph. Let $p(n)$ denote the highest probability path currently computed for a node $n$. Set $p(s) = 1$ and all other nodes $n \in G$, $p(n) = 0$.
+		\item In the topological order obtained from (1) starting with $s$, do the following with each node $v$:
+		\begin{enumerate}
+			\item For every node $u$ that is adjacent to $v$, if $p(u) < p(v) \cdot p(u,v)$, then set $p(u) = p(v) \cdot p(u,v)$.
+		\end{enumerate}
+		\item Return $p(t)$.
+	\end{enumerate}
+	
+	\no Note that this algorithm is basically exactly the same as finding the shortest path in a DAG. The only differences are that we are looking for the longest path (since we can treat probabilities as edge weights) and instead of adding probabilities, we must multiply them (since that's what you do with compounded probabilities, unlike path lengths).\\
+	
+	\no \textbf{2.} Since there should not be any cycles (A can't be a prerequisite of B if B is a prerequisite of A; and if A is required by B, and B is required by C, it would make no sense for C to be required by A) and prerequisites are unidirectional, this graph will be a DAG (directed acyclic graph). Finding the minimum number of semesters can be likened to finding the longest path in the DAG, as each node will have to be taken in a different semester. We define the algorithm for this as follows: 
+	
+	\begin{enumerate}
+		\item Assume our graph is called $G$. Keep a counter $c_n$ for every node $n$, initialize each node's counter to the number of prerequisites that that node has. This is done in linear time. Also, keep an overall counter $C$ which is initialized to zero.
+		\item While $G$ is not empty:
+		\begin{enumerate}
+			\item Delete all nodes that have $c_n = 0$ from $G$. This simulates "scheduling" a set of classes for one semester.
+			\item For every node deleted, decrement all counters of nodes which have the recently deleted node as a prerequisite. This is also done linearly.
+			\item Increment $C$.
+		\end{enumerate}
+		\item Return $C$.
+	\end{enumerate} 
+
+	\no This algorithm will return the longest path in the DAG, in other words, the number of semesters necessary to complete the degree. Since all the steps are linear, the overall algorithm also has linear time complexity.\\
+
+	\no \textbf{3.} \\
+
+	\no \textbf{4.}
+	
+	\no \textbf{5.}
+
+\end{document}
