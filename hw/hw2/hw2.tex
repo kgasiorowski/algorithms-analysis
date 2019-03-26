@@ -50,10 +50,12 @@
 
 	\no This algorithm will return the longest path in the DAG, in other words, the number of semesters necessary to complete the degree. Since all the steps are linear, the overall algorithm also has linear time complexity.\\
 
-	\no \textbf{3.} \\
+	\no \textbf{3.} According to the hint, we know that we absolutely must stop at a station within 100 miles of stony brook. Likewise, we can assume that we will have to make a stop at most 100 miles away from San Francisco. We can call this station $x_i$. This is our base case. In order to know the minimum amount of time we can spend tanking up until station $x_i$, then we must first find the minimum amount of time we have to spend at station $x_{i-1}$. Thus, it is easy to see that a recurrence relation can be set up here.\\
 
-	\no \textbf{4.}
+	\no \textbf{4.}\\
 	
-	\no \textbf{5.}
+	\no \textbf{5a.} We define some variables. We have convoy $C$ which has $i$ ships in it. Each ship's value is defined as $v_n\text{, where }1 \leq n \leq i.$ We define $b(C,n)$ as breaking convoy $C$ at ship $n$. We can easily define the recurrence relation as $b(C,n) = v_n + b(C,n-1)$, since breaking off the convoy at some ship $n$ is the same as breaking off the convoy one ship further down the convoy and adding the next ship's worth to that.\\
+
+	\no \textbf{b.} This problem is similar as the one above, 
 
 \end{document}
