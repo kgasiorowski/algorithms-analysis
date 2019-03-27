@@ -3,6 +3,7 @@
 \usepackage{amssymb}
 \usepackage{ragged2e}
 \usepackage{graphicx}
+\usepackage{listings}
 
 \newcommand{\Lim}[1]{\raisebox{0.5ex}{\scalebox{0.8}{$\displaystyle \lim_{#1}\;$}}}
 \newcommand{\MLim}{\Lim{x\rightarrow\infty}}
@@ -50,12 +51,62 @@
 
 	\no This algorithm will return the longest path in the DAG, in other words, the number of semesters necessary to complete the degree. Since all the steps are linear, the overall algorithm also has linear time complexity.\\
 
-	\no \textbf{3.} According to the hint, we know that we absolutely must stop at a station within 100 miles of stony brook. Likewise, we can assume that we will have to make a stop at most 100 miles away from San Francisco. We can call this station $x_i$. This is our base case. In order to know the minimum amount of time we can spend tanking up until station $x_i$, then we must first find the minimum amount of time we have to spend at station $x_{i-1}$. Thus, it is easy to see that a recurrence relation can be set up here.\\
-
-	\no \textbf{4.}\\
+	\no \textbf{3.} Let us define a function $t(a, b) =$ the time taken to travel from point $a$ to point $b$. We are trying to figure out an algorithm to find $t(SF, SB)$. 
 	
-	\no \textbf{5a.} We define some variables. We have convoy $C$ which has $i$ ships in it. Each ship's value is defined as $v_n\text{, where }1 \leq n \leq i.$ We define $b(C,n)$ as breaking convoy $C$ at ship $n$. We can easily define the recurrence relation as $b(C,n) = v_n + b(C,n-1)$, since breaking off the convoy at some ship $n$ is the same as breaking off the convoy one ship further down the convoy and adding the next ship's worth to that.\\
+	Consider $i$ stations that are within 100 miles of San Francisco (denoted as stations $x_1, x_2, \ldots x_i$). We must visit at least one of these stations, and so we must choose. 
+	\begin{itemize}
+		\item If we choose station $x_1$, then we get $t(SF,SB) = c_1 + t(x_1,SB)$
+		\item If we choose station $x_2$, then we get $t(SF,SB) = c_2 + t(x_2,SB)$
+		\item If we choose station $x_k$, then we get $t(SF,SB) = c_i + t(x_i,SB)$
+	\end{itemize}
 
-	\no \textbf{b.} This problem is similar as the one above, 
+	Notice also that if we choose station $x_1$, then our range increases to include some extra set of stations, say $x_{i+j}$. If we then stop at $x_{k+j}$, then our time becomes $t(SF,SB) = c_1 + c_{i+j} + t(x_{i+j},SB)$. Now we can see the recursive solution: $\boxed{t(SF,SB) = min\{c_k + t(x_k,SB)\},\;1 \leq k \leq i}$ where $i$ is the number of stations within 100 miles of San Francisco. For the last station $x_n, \; t(x_n,SB) = 0$.\\
+
+	\pagebreak
+
+	\no The pseudocode is given below.
+	
+	\begin{lstlisting}
+let D be the array of distances from SF to each station 
+let T be an array of size n, initialized to -1
+T[n] = 0 (base case)
+
+Time(t):
+
+	if T[t] is not -1:
+		return T[t]
+	else:
+		
+		smallest = infinity
+		counter = 1
+		
+		while D[t + counter] - D[t] < 100:
+		
+			temp = T[t+counter]+Time(t+counter)
+			
+			if temp < smallest:
+				
+				smallest = temp
+				
+			endif
+			
+			counter = counter + 1
+			
+		end while
+		
+		T[t] = smallest
+		
+		return T[t]
+		
+	end if
+	\end{lstlisting}
+
+	\no \textbf{4.} Not attempted.\\
+	
+	\pagebreak
+	
+	\no \textbf{5a.} We define some variables. We have convoy $C$ which has $i$ ships in it. Each ship's value is defined as $v_n\text{, where }1 \leq n \leq i.$ We define $b(C,n)$ as breaking convoy $C$ at ship $n$. We can easily define the recurrence relation as $b(C,n) = v_n + b(C,n-1)\; , 1 < n \leq i$, since breaking off the convoy at some ship $n$ is the same as breaking off the convoy one ship before in the convoy and adding the next ship's worth to that. Our base case is when $n=1$, or when Jack simply breaks off the first ship in the convoy. This is $b(C,1) = v_1$. Since this is a single-recursive relation, it's clear that the algorithm to actually solve it must be $O(n)$ complexity.\\
+
+	\no \textbf{b.} This problem is similar to the one above. The still relation still holds, but we have to add an additional recursive relation to it. For every $n,\;1 \leq n \leq i$, we must consider that Jack's partner will break off the convoy a second time at some point $j,\; n < j \leq i$. So we redefine our function as $b(C, n, j) = v_n + b(C,n-1,j) - b(C,n,j+1)$. We have two base cases: when $j=i$ and when $n=1$. When $j = i$, return $v_i$. When $n = 0$, return $v_1$. Since this is doubly-recursive we can use memoization to skip repetitive computations. Since we need to recursively find the sum of ships after the second break-off point multiple times per call, we can store the sums in an array and simply recall them when they are needed.
 
 \end{document}
