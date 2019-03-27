@@ -67,7 +67,7 @@
 	\no The pseudocode is given below.
 	
 	\begin{lstlisting}
-let D be the array of distances from SF to each station 
+let dist be the array of distances from SF to each station 
 let T be an array of size n, initialized to -1
 T[n] = 0 (base case)
 
@@ -80,7 +80,7 @@ Time(t):
 		smallest = infinity
 		counter = 1
 		
-		while D[t + counter] - D[t] < 100:
+		while dist[t + counter] - dist[t] < 100:
 		
 			temp = T[t+counter]+Time(t+counter)
 			
